@@ -4,6 +4,8 @@ Some of the formulas that are used to compute the helix dimensions are taken fro
 
 <img src="https://user-images.githubusercontent.com/76875958/126063809-c2a07ed3-0a55-4eae-b551-58973dcbdb07.gif" alt="Random helix gif" width="25%" height="25%">
 
+Also please keep in mind that this is the first project I've ever done in OpenSCAD so expect a lot of strange and non-sensical code if you're going to be investigating it. With that said though I'm happy to take suggestions for improvements, bug fixes, or additional features. Feel free to open issues or make pull requests if you manage to improve the script!
+
 ## Usage
 
 ### Downloading
