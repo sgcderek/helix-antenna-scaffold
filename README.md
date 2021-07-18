@@ -11,7 +11,7 @@ Also please keep in mind that this is the first project I've ever done in OpenSC
 ### Downloading
 
 To use this project you need to have OpenSCAD installed. It is a free and open source program with binaries for Windows, Mac and Linux available for download [here](https://openscad.org/downloads.html).  
-Once OpenSCAD is on your system you can load the .scad file from this repository by downloading it and opening it in OpenSCAD, or copying and pasting the code from it into OpenSCAD's editor.
+Once OpenSCAD is on your system you can load the .scad file from this repository by downloading it and opening it in OpenSCAD, or copying and pasting the code from it into OpenSCAD's editor. The .json file sharing the same name contains example presets and has to be placed in the same folder as the .scad file to work (optional).
 
 Change the parameters of the code to customize the scaffold. This is done either by using OpenSCAD's automatically generated parameter window or by manually adjusting the values in the code using the editor (may be required when the parameter window doesn't behave as expected). The editor can be opened by right-clicking the top bar. Once you have applied your changes, press F5 to refresh the model preview.
 
