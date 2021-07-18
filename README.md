@@ -2,6 +2,8 @@ This repository contains the OpenSCAD file capable of generating helical antenna
 
 Some of the formulas that are used to compute the helix dimensions are taken from [daycounter.com](https://www.daycounter.com/Calculators/Helical-Antenna-Design-Calculator.phtml). I do not guarantee that the resulting helix scaffold will be perfect and in tune, as there are many factors that affect the performance. It does however generate scaffolds pretty much identical to my original ones as long as proper inputs are given, and those have a pretty good track record.
 
+<img src="https://user-images.githubusercontent.com/76875958/126063809-c2a07ed3-0a55-4eae-b551-58973dcbdb07.gif" alt="Random helix gif" width="25%" height="25%">
+
 ## Usage
 
 ### Downloading
