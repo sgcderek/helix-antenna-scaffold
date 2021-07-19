@@ -41,6 +41,9 @@ Mounting_diameter = 10;
 // Distance between the centers of the outer mounting holes (mm)
 Mounting_separation = 80;
 
+// When set to true, holes that would overlap with the top of the scaffold aren't rendered
+Prevent_hole_clipping = true;
+
 //-------------------------------------------------------
 // Advanced settings:
 // Changing can result in very bad (or good) things happening
@@ -84,11 +87,9 @@ coil_height = Spacing_dist*Turns;
 ground_diam = wavelength*7.5;
 
 // the variable names actually dont make sense dont think about it
-base_h = Wall_thickness*Base_thickness_modifier;//mm - base circle height
-base_t = Wall_thickness*Base_width_modifier;//mm - base circle thickness
-leg_w = Wall_thickness*Leg_width_modifier;//mm - leg width
-
-scale_factor = LHCP ? -1 : 1;
+base_h = Wall_thickness*Base_thickness_modifier; // base circle height
+base_t = Wall_thickness*Base_width_modifier; // base circle thickness
+leg_w = Wall_thickness*Leg_width_modifier; // leg width
 
 echo("╔═══════");
 echo("║Frequency:",Frequency,"MHz");
@@ -111,31 +112,24 @@ if (View_reflector){
 }
 
 
-scale([1,scale_factor,1])
+scale([1,LHCP ? -1 : 1,1]) // invert Y axis to change polarization
 union(){
     difference(){
         difference(){
+            
+            // base circle
             color(Scaffold_color)
-            cylinder(r1=coil_diam/2+base_t/2, r2=coil_diam/2+base_t/2, base_h);
-                
+            cylinder(r1=coil_diam/2+base_t/2, r2=coil_diam/2+base_t/2, base_h); // outer circle
             translate([0,0,-1])
             color(Scaffold_color)
-            cylinder(r1=coil_diam/2-base_t/2, r2=coil_diam/2-base_t/2, base_h+2);
+            cylinder(r1=coil_diam/2-base_t/2, r2=coil_diam/2-base_t/2, base_h+2); // inner cutout
         }
 
         // Cutout section
-
-        if ((Enable_cutout)&&(Leg_count < 2)){
-            rotate([0,0,-180/2])
+        if (Enable_cutout){
+            rotate([0,0,(Leg_count >= 2 ? -180/Leg_count : -90)])
             translate([0,0,2])
-            rotate_extrude(angle=180)
-            translate([coil_diam/2,0,0])
-            color(Scaffold_color)
-            square([base_t*2,base_h+2+Wall_thickness], center=true);
-        } else if (Enable_cutout){
-            rotate([0,0,-180/Leg_count])
-            translate([0,0,2])
-            rotate_extrude(angle=360/Leg_count)
+            rotate_extrude(angle=(Leg_count >= 2 ? 360/Leg_count : 180))
             translate([coil_diam/2,0,0])
             color(Scaffold_color)
             square([base_t*2,base_h+2+Wall_thickness], center=true);
@@ -152,22 +146,25 @@ union(){
             cube([base_t*1.5,leg_w,coil_height],center=true);
 
             // leg T support
-            rotate([0,0,leg+360/Leg_count/2])
-            translate([coil_diam/2+base_t*1.5/2+leg_w/2,0,coil_height/2])
+            rotate([0,0,leg+180/Leg_count])
+            translate([coil_diam/2+base_t*0.75+leg_w/2,0,coil_height/2])
             color(Scaffold_color)
-            cube([leg_w,leg_w*2*Outer_leg_reinforcement_modifier,coil_height],center=true);
+            cube([leg_w,leg_w*Outer_leg_reinforcement_modifier*2,coil_height],center=true);
                 
             // tip overhang support
             if ((Enable_overhang_support)&&(Leg_count > 1)){
                 difference(){
-                    rotate([0,0,leg+360/Leg_count/2])
+                    
+                    // main body
+                    rotate([0,0,leg+180/Leg_count])
                     translate([coil_diam/4,0,coil_height-coil_diam/4])
                     color(Scaffold_color)
-                    cube([coil_diam/2,leg_w,coil_diam/2],center=true);
+                    cube([coil_diam/2,leg_w,coil_diam/2],center=true); 
                         
+                    // spherical cutout
                     translate([0,0,coil_height-coil_diam/2])
                     color(Scaffold_color)
-                    sphere( coil_diam/2 - leg_w/2 );
+                    sphere(coil_diam/2-leg_w/2); 
                 }
             }
         }
@@ -176,13 +173,13 @@ union(){
         for (leg = [0:(360/Leg_count):360]){
             for (hole = [0:1:Turns]){
                 z_pos = coil_height/Turns*hole+(leg+360/Leg_count)/360*Spacing_dist;
-                if(z_pos < coil_height-Wire_diameter){
-                rotate([0,0,leg+360/Leg_count/2])
-                translate([coil_diam/2,0,z_pos])
-                rotate([0,90,90])
-                translate([0,0,-leg_w*1.1/2])
-                color(Scaffold_color)
-                cylinder( r1=Wire_diameter/2, r2=Wire_diameter/2, leg_w*1.1);
+                if (!((z_pos > coil_height-Wire_diameter)&&(Prevent_hole_clipping))){ // only make a hole when its below scaffold height or when clipping is allowed
+                    rotate([0,0,leg+180/Leg_count])
+                    translate([coil_diam/2,0,z_pos])
+                    rotate([0,90,90])
+                    translate([0,0,-leg_w*0.55])
+                    color(Scaffold_color)
+                    cylinder( r1=Wire_diameter/2, r2=Wire_diameter/2, leg_w*1.1);
                 }
             }
         }
@@ -193,6 +190,7 @@ union(){
 
         difference(){
             union(){
+                
                 // right mount rim
                 translate([0,Mounting_separation/2,0])
                 color(Scaffold_color)
@@ -210,6 +208,7 @@ union(){
             }
 
             union(){
+                
                 // right mount hole
                 translate([0,Mounting_separation/2,-1])
                 color(Scaffold_color)
