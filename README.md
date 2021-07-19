@@ -31,6 +31,7 @@ The parameters are the same no matter if you're using the parameter window or th
 * **Enable inner mounts** - A boolean variable that enables or disables an extra inner mount in the center of the scaffold.
 * **Mounting diameter** - Sets the diameter of the mounting holes in milimeters. Set this slightly higher than your mount bolt diameter to improve printing tolerances.
 * **Mounting separation** - The distance between the two outer mount leg centers in milimeters. When setting this, make sure you have enough clearance between the outer mounting legs (most of my older scaffolds used 80mm footprint, obviously needs to be increased when working with longer wavelengths).  
+* **Prevent hole clipping** - When this is enabled, a hole in the scaffold leg will not be rendered when it overlaps or gets too close (within wire diameter) of the top of the helix.
 - *By default some dimensions of the helix are scaled together with the operating wavelength which may cause issues in some cases. The following modifiers can be used to manually tweak those (e.g. a modifier of "2" will double a given value, a modifier of "0.5" will half it).*
 * **Base thickness modifier** - Modifies the thickness of the base footprint of the helix.
 * **Leg width modifier** - Modifies the width of the helix support legs.
