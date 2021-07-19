@@ -202,30 +202,49 @@ union(){
                 cylinder( r1=Mounting_diameter*Mount_rim_thickness_modifier, r2=Mounting_diameter*Mount_rim_thickness_modifier, h=base_h );
                     
                 // main mount rim
-                translate([0,0,base_h/2])
-                color(Scaffold_color)
-                cube([Mounting_diameter*2*Mount_rim_thickness_modifier,Mounting_separation,base_h], center=true);
+                if (Mounting_separation > coil_diam){
+                    translate([0,0,base_h/2])
+                    color(Scaffold_color)
+                    cube([Mounting_diameter*2*Mount_rim_thickness_modifier,Mounting_separation,base_h], center=true);
+                }
+                
+                // extra inner side rims when mount smaller than helix
+                if (Mounting_separation <= coil_diam){
+                    translate([0,(coil_diam/2-(coil_diam-Mounting_separation)/4),base_h/2])
+                    color(Scaffold_color)
+                    cube([Mounting_diameter*2*Mount_rim_thickness_modifier,(coil_diam-Mounting_separation)/2,base_h], center=true);
+                    
+                    translate([0,-(coil_diam/2-(coil_diam-Mounting_separation)/4),base_h/2])
+                    color(Scaffold_color)
+                    cube([Mounting_diameter*2*Mount_rim_thickness_modifier,(coil_diam-Mounting_separation)/2,base_h], center=true);
+                }
             }
 
             union(){
                 
-                // right mount hole
-                translate([0,Mounting_separation/2,-1])
-                color(Scaffold_color)
-                cylinder( r1=Mounting_diameter/2, r2=Mounting_diameter/2, h=base_h+2 );
-
-                // left mount hole
-                translate([0,-Mounting_separation/2,-1])
-                color(Scaffold_color)
-                cylinder( r1=Mounting_diameter/2, r2=Mounting_diameter/2, h=base_h+2 );
+                if (Enable_outer_mounts){
                     
-                // center mount hole
-                translate([0,0,-1])
-                color(Scaffold_color)
-                cylinder( r1=Mounting_diameter/2, r2=Mounting_diameter/2, h=base_h+2 );
+                    // right mount hole
+                    translate([0,Mounting_separation/2,-1])
+                    color(Scaffold_color)
+                    cylinder( r1=Mounting_diameter/2, r2=Mounting_diameter/2, h=base_h+2 );
+
+                    // left mount hole
+                    translate([0,-Mounting_separation/2,-1])
+                    color(Scaffold_color)
+                    cylinder( r1=Mounting_diameter/2, r2=Mounting_diameter/2, h=base_h+2 );
+                }
+                    
+                if (Enable_inner_mounts){
+                    
+                    // center mount hole
+                    translate([0,0,-1])
+                    color(Scaffold_color)
+                    cylinder( r1=Mounting_diameter/2, r2=Mounting_diameter/2, h=base_h+2 );
+                }
                     
                 // center cutout
-                if ((Enable_outer_mounts)&&(!Enable_inner_mounts)){
+                if (((Enable_outer_mounts)&&(!Enable_inner_mounts))&&(Mounting_separation > coil_diam)){
                     translate([0,0,-1])
                     color(Scaffold_color)
                     cylinder( r1=coil_diam/2, r2=coil_diam/2, h=base_h+2 );
