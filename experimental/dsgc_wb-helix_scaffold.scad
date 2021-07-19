@@ -14,8 +14,9 @@ disclaimer = true;
 
 Frequency = 1500;
 Frequency2 = 2500;
+skew_pos_mod = 1.0; // change this if there are unwanted gaps between the leg and the skewed cutout/support
 LHCP = true;
-Turns = 7;
+Turns = 5;
 Spacing = 0.2;
 Wire_diameter = 3;
 Leg_count = 3;
@@ -36,6 +37,20 @@ View_reflector = false;
 Reflector_thickness = 1;
 Scaffold_color = [0.2,0.7,0.7];
 $fn = 30;
+
+// skew() module by @boredzo
+// https://gist.github.com/boredzo/fde487c724a40a26fa9c
+module skew(dims) {
+matrix = [
+	[ 1, dims[0]/45, dims[1]/45, 0 ],
+	[ dims[2]/45, 1, dims[4]/45, 0 ],
+	[ dims[5]/45, dims[3]/45, 1, 0 ],
+	[ 0, 0, 0, 1 ]
+];
+multmatrix(matrix)
+children();
+}
+
 
 //-------------------------------------------------------
 // Anything below this line is bad and classified as a cognitohazard by the Foundation, do not actually look at it if you just want a feed
@@ -100,18 +115,31 @@ union(){
     }
 
     difference(){
+        
+        skew_angle = 90-atan(coil_height_adj/((coil_diam-coil_diam2)/3));
+        
         // Legs
         for (leg = [0:360/Leg_count:360]){
             // inner leg
-            rotate([0,0,leg+360/Leg_count/2])
-            translate([coil_diam/2-(coil_diam/4-coil_diam2/4),0,coil_height_adj/2])
-            color(Scaffold_color)
-            cube([(coil_diam-coil_diam2)*0.85,leg_w,coil_height_adj],center=true);
-
+            difference(){
+                rotate([0,0,leg+360/Leg_count/2])
+                translate([coil_diam/2-(coil_diam/4-coil_diam2/4),0,coil_height_adj/2])
+                color(Scaffold_color)
+                cube([(coil_diam-coil_diam2),leg_w,coil_height_adj],center=true);
+            
+                //outer skew cutout
+                rotate([0,0,leg+180/Leg_count])
+                translate([((coil_diam/2 + leg_w*12)-(coil_diam-coil_diam2)/4)*skew_pos_mod,0,coil_height_adj/2])
+                color(Scaffold_color)
+                skew([0, -skew_angle, 0, 0, 0, 0])
+                cube([leg_w*20,leg_w*2,coil_height_adj*1.1],center=true);
+                }
+                
             // leg T support
             rotate([0,0,leg+180/Leg_count])
-            translate([coil_diam/2+(coil_diam-coil_diam2)/8+leg_w/2,0,coil_height_adj/2])
+            translate([((coil_diam/2 + leg_w*2)-(coil_diam-coil_diam2)/4)*skew_pos_mod,0,coil_height_adj/2])
             color(Scaffold_color)
+            skew([0, -skew_angle, 0, 0, 0, 0])
             cube([leg_w,leg_w*Outer_leg_reinforcement_modifier*2,coil_height_adj],center=true);
                 
             // tip overhang support
@@ -120,14 +148,21 @@ union(){
                     
                     // main body
                     rotate([0,0,leg+180/Leg_count])
-                    translate([coil_diam/4,0,coil_height_adj-coil_diam/4])
+                    translate([coil_diam2/4,0,coil_height_adj-coil_diam/4])
                     color(Scaffold_color)
-                    cube([coil_diam/2,leg_w,coil_diam/2],center=true); 
-                        
+                    cube([coil_diam2/2,leg_w,coil_diam/2],center=true); 
+                    
+                    union(){
                     // spherical cutout
-                    translate([0,0,coil_height_adj-coil_diam/2])
+                    translate([0,0,coil_height_adj-coil_diam2/2])
                     color(Scaffold_color)
-                    sphere(coil_diam/2-leg_w/2); 
+                    sphere(coil_diam2/2-leg_w/2); 
+                      
+                    // extra cylinder cutout  
+                    translate([0,0,coil_height_adj-coil_height2/1.5])
+                    color(Scaffold_color)
+                    cylinder(r1=coil_diam2/2-leg_w/2, r2=coil_diam2/2-leg_w/2, h=coil_height2/2); 
+                    }
                 }
             }
         }
