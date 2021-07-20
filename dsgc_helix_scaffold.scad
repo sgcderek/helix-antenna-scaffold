@@ -91,10 +91,17 @@ base_h = Wall_thickness*Base_thickness_modifier; // base circle height
 base_t = Wall_thickness*Base_width_modifier; // base circle thickness
 leg_w = Wall_thickness*Leg_width_modifier; // leg width
 
+polarization = LHCP ? "LHC" : "RHC";
+scaf_width_mount = Enable_outer_mounts ? (Mounting_separation+Mounting_diameter*Mount_rim_thickness_modifier*2) : 0;
+scaf_width_leg = Outer_leg_reinforcement_modifier ? (coil_diam/2+base_t*0.75+leg_w)*2 : (coil_diam/2+base_t*0.75)*2  ;
+scaf_width = max(scaf_width_mount, scaf_width_leg);
+
 echo("╔═══════");
 echo("║Frequency:",Frequency,"MHz");
-polarization = LHCP ? "LHC" : "RHC";
 echo("║Polarization:",polarization);
+echo("║Min. recom. reflector diam.:",ground_diam,"mm");
+echo("║Scaffold height:",coil_height,"mm");
+echo("║Scaffold width at widest point:",scaf_width,"mm");
 echo("╠═══════");
 if ((Enable_overhang_support)&&(Leg_count == 1)){
 echo("║Only 1 leg selected, overhang disabled ");
