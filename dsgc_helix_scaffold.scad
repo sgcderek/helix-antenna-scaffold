@@ -23,6 +23,9 @@ Leg_count = 3;
 // Base thickness value of all scaffold walls in milimeters.
 Wall_thickness = 4;
 
+// Generates different supports for stacking. Turn number needs to be adjusted properly when making a scaffold stack.
+Stacked = false;
+
 // Generate extra overhang support at the tip of the helix
 Enable_overhang_support = true;
 
@@ -121,6 +124,7 @@ if (View_reflector){
 
 scale([1,LHCP ? -1 : 1,1]) // invert Y axis to change polarization
 union(){
+    if (!Stacked){
     difference(){
         difference(){
             
@@ -142,6 +146,7 @@ union(){
             square([base_t*2,base_h+2+Wall_thickness], center=true);
         }
     }
+    }
 
     difference(){
         // Legs
@@ -157,7 +162,14 @@ union(){
             translate([coil_diam/2+base_t*0.75+leg_w/2,0,coil_height/2])
             color(Scaffold_color)
             cube([leg_w,leg_w*Outer_leg_reinforcement_modifier*2,coil_height],center=true);
-                
+            
+            if (Stacked){
+                    rotate([0,0,leg+180/Leg_count])
+                    translate([coil_diam/4,0,base_h/2])
+                    color(Scaffold_color)
+                    cube([coil_diam/2,leg_w,base_h],center=true); 
+            }
+            
             // tip overhang support
             if ((Enable_overhang_support)&&(Leg_count > 1)){
                 difference(){
@@ -193,7 +205,7 @@ union(){
     }
 
     // Mounting holes
-    if ((Enable_outer_mounts)||(Enable_inner_mounts)){
+    if (((Enable_outer_mounts)||(Enable_inner_mounts))&&(!Stacked)){
 
         difference(){
             union(){
