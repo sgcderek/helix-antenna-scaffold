@@ -1,4 +1,6 @@
-This repository contains the OpenSCAD file capable of generating helical antenna scaffolds procedurally based on user inputs.  
+This repository contains the OpenSCAD files capable of generating helical antenna scaffolds procedurally based on user inputs.  
+
+![image](https://user-images.githubusercontent.com/76875958/126278826-27347789-7698-49d1-b7dd-03afd9dbf329.png)
 
 Some of the formulas that are used to compute the helix dimensions are taken from [daycounter.com](https://www.daycounter.com/Calculators/Helical-Antenna-Design-Calculator.phtml). I do not guarantee that the resulting helix scaffold will be perfect and in tune, as there are many factors that affect the performance. It does however generate scaffolds pretty much identical to my original ones as long as proper inputs are given, and those have a pretty good track record.
 
@@ -41,6 +43,8 @@ The parameters are the same no matter if you're using the parameter window or th
 * **Reflector thickness** - Sets the thickness of the reflector render in milimeters.
 * **Scaffold color** - Three values between 0 and 1 set the RGB color used for the scaffold mesh. Won't affect the resulting stl.
 * **$fn** - A default OpenSCAD variable that defines the number of faces used for spherical/curved geometry. You can increase this before exporting your stl to make it smoother (or decrease it if you're feeling particularly artistic).
+
+When previewing using F5 or rendering using F6, additional information will be printed in the console output with the dimensions of the helix. This includes the max height and width so you can judge how well the model will fit the print bed.
 
 ### Exporting
 
