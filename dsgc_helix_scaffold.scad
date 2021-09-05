@@ -21,7 +21,7 @@ Wire_diameter = 3;
 Leg_count = 3;
 
 // Base thickness value of all scaffold walls in milimeters.
-Wall_thickness = 4;
+Wall_thickness = 5;
 
 // Generates different supports for stacking. Turn number needs to be adjusted properly when making a scaffold stack.
 Stacked = false;
@@ -56,7 +56,7 @@ Prevent_hole_clipping = true;
 Base_thickness_modifier = 1.0;
 
 // Affects the width of the base (and legs).
-Base_width_modifier = 1.0;
+Base_width_modifier = 1.1;
 
 // Affects the thickness of the legs independently of the base.
 Leg_width_modifier = 1.0;
@@ -155,7 +155,7 @@ union(){
             rotate([0,0,leg+360/Leg_count/2])
             translate([coil_diam/2,0,coil_height/2])
             color(Scaffold_color)
-            cube([base_t*1.5,leg_w,coil_height],center=true);
+            cube([base_t*2,leg_w,coil_height],center=true);
 
             // leg T support
             rotate([0,0,leg+180/Leg_count])
