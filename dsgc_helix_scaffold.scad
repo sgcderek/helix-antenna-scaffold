@@ -198,7 +198,7 @@ union(){
                     rotate([0,90,90])
                     translate([0,0,-leg_w*0.55])
                     color(Scaffold_color)
-                    cylinder( r1=Wire_diameter/2, r2=Wire_diameter/2, leg_w*1.1);
+                    cylinder( r1=Wire_diameter/2*1.2, r2=Wire_diameter/2*1.2, leg_w*1.1);
                 }
             }
         }
