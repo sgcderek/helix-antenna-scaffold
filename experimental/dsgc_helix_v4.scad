@@ -9,7 +9,7 @@
 Frequency = 1700;
 
 // Whether the helix should be right or left hand circularly polarized (keep in mind a dish reflector inverts polarization)
-Polarization = "RHCP"; //[RHCP,LHCP]
+Polarization = "LHCP"; //[RHCP,LHCP]
 
 // How many turns the helix will have
 Turns = 5.5;
