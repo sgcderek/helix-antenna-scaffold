@@ -9,7 +9,7 @@
 Frequency = 1700;
 
 // Whether the helix should be right or left hand circularly polarized (keep in mind a dish reflector inverts polarization)
-Polarization = "LHCP"; //[RHCP,LHCP]
+Polarization = "RHCP"; //[RHCP,LHCP]
 
 // How many turns the helix will have
 Turns = 5.5;
@@ -63,6 +63,26 @@ $fn = 30;
 
 polmod = (Polarization == "RHCP") ? 1 : -1;
 mturnmod0 = Matching_Turn_Section/100;
+poltext = (Polarization == "RHCP") ? "R" : "L";
+
+code = str(
+    Frequency,
+    poltext,
+    "_",
+    Turns,
+    "T_",
+    Spacing,
+    "S_",
+    Cutout_Diameter,
+    "D_",
+    Mounting_Hole_Diameter,
+    "-",
+    Mounting_Footprint_Separation,
+    "M"
+    
+);
+
+echo(code);
 
 // Segments per turn
 spt = $preview ? 20 : 40;
@@ -79,20 +99,20 @@ hrad = wlength/PI/2;
 // Total number of segments in helix
 tseg = spt*Turns;
 
-// Segment revolve angle (°)
+// Segment revolve angle (degrees)
 segrev = 360/spt*polmod;
 
-// Leg revolve angle (°)
+// Leg revolve angle (degrees)
 legrev = 360/Support_Leg_Count;
 
-// Cutout revolve angle (°)
+// Cutout revolve angle (degrees)
 cutrev = min(legrev, 360/Mounting_Leg_Count)*0.9;
 // The cutout is put between whatever set of
 // legs is the closest. This usually means the
 // main scaffold legs as there will likely be
 // more of them.
 
-// Mounting leg revolve angle (°)
+// Mounting leg revolve angle (degrees)
 mlegrev = 360/Mounting_Leg_Count;
 
 // Turn circumference (mm)
@@ -117,7 +137,7 @@ hlength = Turns*sqrt(height/Turns*height/Turns + tcirc*tcirc);
 // Segment lenght (mm)
 seglen = hlength/tseg*1.1;
 
-// Segment pitch (°)
+// Segment pitch (degrees)
 segpitch = atan(height/hlength)*(1+Spacing*0.28);
 // not sure what's wrong with the formula here
 // atan(height/hlength) doesn't come up with a large enough pitch
@@ -163,7 +183,7 @@ difference(){
                             translate([Base_Wall_Width*6-1.4,txtsize/2,Base_Wall_Width*3])
                             rotate([90,-90,90])
                             linear_extrude(height=1.5)
-                            text(text=(str(Frequency,"M")), size=txtsize, font=txtfont);
+                            text(text=(str(Frequency,poltext)), size=txtsize, font=txtfont);
                         } else if (leg == 2){
                             translate([Base_Wall_Width*6-1.4,txtsize/2,Base_Wall_Width*3])
                             rotate([90,-90,90])
@@ -235,7 +255,7 @@ difference(){
     union(){
         
         // Helix segment for loop
-        for (seg = [0:1:tseg]){
+        for (seg = [0:1:tseg+1]){
             
             // Segment position within helix (0 = first, 1 = last)
             segpos = seg/tseg;
@@ -255,7 +275,7 @@ difference(){
             // Segment pitch modified by matching offset
             segpitchmod = (zpos < 0) ? 0 : segpitch;
             
-            // Polarization 180° offset (LHCP)
+            // Polarization 180 degree offset (LHCP)
             poloffset = (polmod == -1) ? 180 : 0;
             
             // Create segment
