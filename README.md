@@ -12,4 +12,6 @@ An improvement over v3 mainly meant to tackle a common issue with the support le
 
 **Version 3**  
 ![](https://github.com/sgcderek/dsgc-helix-scaffold/blob/funny/dsgc_helix_v3.png?raw=true)  
-Initial recreation of my former scaffolds made manually and individually in Fusion 360. Probably don't use this anymore.
+Initial recreation of the former scaffolds made manually and individually in Fusion 360. Probably don't use this anymore.
+
+*Versions 1 and 2 were one-offs made in Fusion 360 on an individual basis*
