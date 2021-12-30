@@ -1,6 +1,6 @@
 /*
 * dereksgc customizable helical antenna scaffold v4
-* Changes can be tracked at https://github.com/sgcderek/dsgc-helix-scaffold (dsgc_helix_v4.scad)
+* Changes can be tracked at https://github.com/sgcderek/dsgc-helix-scaffold/blob/funny/dsgc_helix_v4.scad
 */
 
 /* [Basic settings] */
@@ -282,8 +282,8 @@ difference(){
             rotate([0,0,seg*segrev+poloffset])
             translate([hrad*polmod,0,zposmod])
             rotate([-90+segpitchmod,0,segrev/2])
-            color("peru")
-            #cylinder(r1=Cutout_Diameter/2,r2=Cutout_Diameter/2,h=seglenmod); // remove the "#" prefix to disable rendering of the helix and only show cutouts instead
+            color("MediumAquamarine")
+            cylinder(r1=Cutout_Diameter/2,r2=Cutout_Diameter/2,h=seglenmod); // remove the "#" prefix to disable rendering of the helix and only show cutouts instead
         }
         // Mounting holes
         for (mleg = [1:1:Mounting_Leg_Count]){

@@ -1,3 +1,8 @@
+/*
+* dereksgc customizable helical antenna scaffold v3
+* Changes can be tracked at https://github.com/sgcderek/dsgc-helix-scaffold/blob/funny/dsgc_helix_v3.scad
+*/
+
 //-------------------------------------------------------
 // Main settings:
 //-------------------------------------------------------
@@ -74,7 +79,7 @@ View_reflector = false;
 Reflector_thickness = 1;
 
 // RGB value applied to the model render (won't affect stl).
-Scaffold_color = [0.7,0.7,0.7];
+Scaffold_color = [1,0.2,0.2];
 
 // Geometry face count.
 $fn = 30;

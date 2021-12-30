@@ -1,3 +1,8 @@
+/*
+* dereksgc customizable helical antenna scaffold v5
+* Changes can be tracked at https://github.com/sgcderek/dsgc-helix-scaffold/blob/funny/dsgc_helix_v5.scad
+*/
+
 /* [Basic settings] */
 
 // Operating frequency of the helix
@@ -87,6 +92,9 @@ Text_size_multiplier = 1;
 
 /* [Hidden] */
 
+// RGB value applied to the model render (won't affect stl).
+Scaffold_color = [0.5,0.5,0.5];
+
 // Polarization modifier (RHCP = 1, LHCP = -1)
 Pol_modifier = (Polarization == "RHCP") ? 1 : -1;
 
@@ -157,6 +165,7 @@ difference(){
         union(){
         
             // Extrude leg from base polygon
+            color(Scaffold_color)
             linear_extrude(height=Total_height){
                 
                 // Leg base polygon
@@ -175,6 +184,7 @@ difference(){
                 rotate([0,270,0])
                 
                 // Extrude bottom strut
+                color(Scaffold_color)
                 linear_extrude(height=Inner_leg_width){
                 
                     // Bottom strut polygon
@@ -193,6 +203,7 @@ difference(){
                 rotate([0,270,0])
                 
                 // Extrude top strut
+                color(Scaffold_color)
                 linear_extrude(height=Inner_leg_width){
                 
                     // Top strut polygon
@@ -207,6 +218,7 @@ difference(){
             
             if (Middle_strut){
                 // Translate and rotate mid strut
+                color(Scaffold_color)
                 translate([Inner_leg_width/2,-Leg_wall_distance/2,(Total_height-Strut_thickness)/2])
                 rotate([0,270,0])
                 
@@ -236,18 +248,21 @@ difference(){
             if (Leg == 1){
                 translate([-Text_size/2,Leg_wall_distance/2-Text_depth,Base_thickness*1.5])
                 rotate([0,270,270])
+                color(Scaffold_color)
                 linear_extrude(height=Text_depth+1){
                     text(Decoration_text,font=Text_font,size=Text_size);
                 }
             } else if (Leg == 2){
                 translate([-Text_size/2,Leg_wall_distance/2-Text_depth,Base_thickness*1.5])
                 rotate([0,270,270])
+                color(Scaffold_color)
                 linear_extrude(height=Text_depth+1){
                     text(Text_frequency,font=Text_font,size=Text_size);
                 }
             } else if (Leg == 3){
                 translate([-Text_size/2,Leg_wall_distance/2-Text_depth,Base_thickness*1.5])
                 rotate([0,270,270])
+                color(Scaffold_color)
                 linear_extrude(height=Text_depth+1){
                     text(Text_ID,font=Text_font,size=Text_size);
                 }
@@ -270,6 +285,7 @@ difference(){
         rotate([90+(Segment_offset == Cutout_diameter ? 0 : Pitch),0,0])
         
         // Render segment
+        color(Scaffold_color)
         cylinder(r1=Cutout_diameter/2,r2=Cutout_diameter/2,h=Segment_height,center=true);
     }
 
@@ -282,16 +298,20 @@ difference(){
     // Body union
     union(){
         // Base
+        color(Scaffold_color)
         cylinder(d=Diameter+Cutout_diameter*1.5+Base_width*2,h=Base_thickness);
         
         // Mounting spar
         translate([0,0,Base_thickness/2])
+        color(Scaffold_color)
         cube([Mounting_diameter+Mounting_thickness*2,Mounting_separation,Base_thickness],center=true);
         
         // Mounting rims
         translate([0,Mounting_separation/2,Base_thickness/2])
+        color(Scaffold_color)
         cylinder(d=Mounting_diameter+Mounting_thickness*2,h=Base_thickness,center=true);
         translate([0,-Mounting_separation/2,Base_thickness/2])
+        color(Scaffold_color)
         cylinder(d=Mounting_diameter+Mounting_thickness*2,h=Base_thickness,center=true);
     }
 
@@ -300,6 +320,7 @@ difference(){
         // Segment cutout
         if (Enable_cutout){
             rotate([0,0,-60])
+            color(Scaffold_color)
             rotate_extrude(angle=120)
             translate([Diameter/2+Base_width/2,0,0])
             square([Base_width*2+Cutout_diameter*1.5,Base_thickness*3],center=true);
@@ -307,12 +328,15 @@ difference(){
 
         // Center cutout
         translate([0,0,-1]) // Shift 1mm down to properly cut out
+        color(Scaffold_color)
         cylinder(d=Diameter+Cutout_diameter*1.5,h=Base_thickness+2);
         
         // Mounting holes
         translate([0,Mounting_separation/2,Base_thickness/2])
+        color(Scaffold_color)
         cylinder(d=Mounting_diameter,h=Base_thickness+2,center=true);
         translate([0,-Mounting_separation/2,Base_thickness/2])
+        color(Scaffold_color)
         cylinder(d=Mounting_diameter,h=Base_thickness+2,center=true);
     }
 }
