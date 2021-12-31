@@ -1,6 +1,7 @@
 /*
 * dereksgc customizable helical antenna scaffold v4
 * Changes can be tracked at https://github.com/sgcderek/dsgc-helix-scaffold/blob/funny/dsgc_helix_v4.scad
+* Updated version is available, this file kept mainly for archival purposes
 */
 
 /* [Basic settings] */
