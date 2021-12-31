@@ -1,4 +1,4 @@
-This repository contains the major versions of the helical antenna scaffold OpenSCAD files. These can be used to generate a completely customized scaffold for a helical antenna of any application (HRPT dish feed, Inmarsat antenna, Wifi, FPV, ...).
+This repository contains the major versions of the dereksgc helical antenna scaffold OpenSCAD files. These can be used to generate a completely customized scaffold for a helical antenna of any application (HRPT dish feed, Inmarsat antenna, Wifi, FPV, ...).
 
 Short summary of each version included:
 
