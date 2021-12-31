@@ -1,6 +1,7 @@
 /*
 * dereksgc customizable helical antenna scaffold v3
 * Changes can be tracked at https://github.com/sgcderek/dsgc-helix-scaffold/blob/funny/dsgc_helix_v3.scad
+* Updated version is available, this file kept mainly for archival purposes
 */
 
 //-------------------------------------------------------
@@ -47,7 +48,7 @@ Enable_inner_mounts = false;
 Mounting_diameter = 10;
 
 // Distance between the centers of the outer mounting holes (mm)
-Mounting_separation = 80;
+Mounting_separation = 90;
 
 // When set to true, holes that would overlap with the top of the scaffold aren't rendered
 Prevent_hole_clipping = true;
