@@ -33,7 +33,7 @@ $fn = 25;
 Inner_leg_width = 3;
 
 // Width of the outer leg wall (mm)
-Outer_leg_width = 9;
+Outer_leg_width = 10;
 
 // Distance between inner and outer leg walls (mm)
 Leg_wall_distance = 12;
@@ -41,7 +41,7 @@ Leg_wall_distance = 12;
 /* [Base settings] */
 
 // Base width (mm)
-Base_width = 8;
+Base_width = 10;
 
 // Base thickness (mm)
 Base_thickness = 3;
@@ -89,7 +89,7 @@ Decoration_text = "DEREKSGC";
 Text_depth = 0.75;
 
 // Modifies the size of the text (can be lowered if text is too long)
-Text_size_multiplier = 1;
+Text_size_multiplier = 0.8;
 
 /* [Hidden] */
 
