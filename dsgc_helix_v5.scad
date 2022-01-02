@@ -58,13 +58,13 @@ Strut_thickness = 1;
 Strut_angle = 45;
 
 // Generate a strut at the base of the scaffold
-Bottom_strut = true;
+Bottom_strut = false;
 
 // How much to shift the bottom strut up (mm)
 Bottom_strut_offset = 0;
 
 // Generate a strut in the middle of the scaffold (recommended for tall scaffolds)
-Middle_strut = true;
+Middle_strut = false;
 
 // Generate a strut at the top of the scaffold (recommended for most scaffolds)
 Top_strut = true;
