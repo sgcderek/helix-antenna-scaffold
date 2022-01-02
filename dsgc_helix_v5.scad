@@ -39,7 +39,7 @@ Outer_leg_width = 10;
 Leg_wall_distance = 12;
 
 // Type of leg cross-section to extrude
-Leg_type = "Trapezoid"; //[Trapezoid,T-Beam,H-Beam]
+Leg_type = "T-Beam"; //[Trapezoid,T-Beam,H-Beam]
 
 /* [Base settings] */
 
