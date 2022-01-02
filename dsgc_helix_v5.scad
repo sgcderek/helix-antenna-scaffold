@@ -33,7 +33,7 @@ $fn = 25;
 Inner_leg_width = 3;
 
 // Width of the outer leg wall (mm)
-Outer_leg_width = 10;
+Outer_leg_width = 11;
 
 // Distance between inner and outer leg walls (mm)
 Leg_wall_distance = 12;
