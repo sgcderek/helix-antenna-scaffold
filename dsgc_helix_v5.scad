@@ -186,10 +186,10 @@ difference(){
             }
             
             // Vertical position of the top strut
-            Top_strut_z = Total_height-Strut_thickness-Top_strut_offset;
+            Top_strut_z = Top_strut ? Total_height-Strut_thickness-Top_strut_offset : Total_height-Strut_thickness;
             
             // Vertical position of the top strut
-            Bottom_strut_z = Bottom_strut_offset;
+            Bottom_strut_z = Bottom_strut ? Bottom_strut_offset : 0;
             
             // Vertical position of the mid strut
             Middle_strut_z = (Top_strut_z - Bottom_strut_z)/2+Bottom_strut_z;
