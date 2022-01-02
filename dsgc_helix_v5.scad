@@ -38,6 +38,9 @@ Outer_leg_width = 10;
 // Distance between inner and outer leg walls (mm)
 Leg_wall_distance = 12;
 
+// Type of leg cross-section to extrude
+Leg_type = "Trapezoid"; //[Trapezoid,T-Beam,H-Beam]
+
 /* [Base settings] */
 
 // Base width (mm)
@@ -176,12 +179,42 @@ difference(){
             linear_extrude(height=Total_height){
                 
                 // Leg base polygon
-                polygon(points=[
+                if (Leg_type == "Trapezoid"){
+                    polygon([
                     [-Outer_leg_width/2,Leg_wall_distance/2],
                     [Outer_leg_width/2,Leg_wall_distance/2],
                     [Inner_leg_width/2,-Leg_wall_distance/2],
                     [-Inner_leg_width/2,-Leg_wall_distance/2]
-                ]);
+                    ]);
+                }
+                else if (Leg_type == "T-Beam"){
+                    polygon([
+                    [-Outer_leg_width/2,Leg_wall_distance/2],
+                    [Outer_leg_width/2,Leg_wall_distance/2],
+                    [Outer_leg_width/2,(Leg_wall_distance/2)-Inner_leg_width],
+                    [Inner_leg_width/2,(Leg_wall_distance/2)-Inner_leg_width],
+                    [Inner_leg_width/2,-Leg_wall_distance/2],
+                    [-Inner_leg_width/2,-Leg_wall_distance/2],
+                    [-Inner_leg_width/2,(Leg_wall_distance/2)-Inner_leg_width],
+                    [-Outer_leg_width/2,(Leg_wall_distance/2)-Inner_leg_width]
+                    ]);
+                }
+                else if (Leg_type == "H-Beam"){
+                    polygon([
+                    [-Outer_leg_width/2,Leg_wall_distance/2],
+                    [Outer_leg_width/2,Leg_wall_distance/2],
+                    [Outer_leg_width/2,(Leg_wall_distance/2)-Inner_leg_width],
+                    [Inner_leg_width/2,(Leg_wall_distance/2)-Inner_leg_width],
+                    [Inner_leg_width/2,-((Leg_wall_distance/2)-Inner_leg_width)],
+                    [Outer_leg_width/2,-((Leg_wall_distance/2)-Inner_leg_width)],
+                    [Outer_leg_width/2,-Leg_wall_distance/2],
+                    [-Outer_leg_width/2,-Leg_wall_distance/2],
+                    [-Outer_leg_width/2,-((Leg_wall_distance/2)-Inner_leg_width)],
+                    [-Inner_leg_width/2,-((Leg_wall_distance/2)-Inner_leg_width)],
+                    [-Inner_leg_width/2,(Leg_wall_distance/2)-Inner_leg_width],
+                    [-Outer_leg_width/2,(Leg_wall_distance/2)-Inner_leg_width]
+                    ]);
+                }
                 
             }
             
