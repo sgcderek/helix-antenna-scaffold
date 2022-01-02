@@ -58,13 +58,19 @@ Strut_thickness = 1;
 Strut_angle = 45;
 
 // Generate a strut at the base of the scaffold
-Bottom_strut = false;
+Bottom_strut = true;
+
+// How much to shift the bottom strut up (mm)
+Bottom_strut_offset = 0;
 
 // Generate a strut in the middle of the scaffold (recommended for tall scaffolds)
-Middle_strut = false;
+Middle_strut = true;
 
 // Generate a strut at the top of the scaffold (recommended for most scaffolds)
 Top_strut = true;
+
+// How much to shift the top strut down (mm)
+Top_strut_offset = 0;
 
 /* [Mounting settings] */
 
@@ -179,28 +185,44 @@ difference(){
                 
             }
             
+            // Vertical position of the top strut
+            Top_strut_z = Total_height-Strut_thickness-Top_strut_offset;
+            
+            // Vertical position of the top strut
+            Bottom_strut_z = Bottom_strut_offset;
+            
+            // Vertical position of the mid strut
+            Middle_strut_z = (Top_strut_z - Bottom_strut_z)/2+Bottom_strut_z;
+            
             if (Bottom_strut){
-                // Translate and rotate bottom strut
-                translate([Inner_leg_width/2,-Leg_wall_distance/2,0])
-                rotate([0,270,0])
-                
-                // Extrude bottom strut
-                color(Scaffold_color)
-                linear_extrude(height=Inner_leg_width){
-                
-                    // Bottom strut polygon
-                    polygon(points=[
-                        [0,0],
-                        [Strut_thickness,0],
-                        [Strut_thickness,-Diameter/2+Leg_wall_distance/2],
-                        [0,-Diameter/2+Leg_wall_distance/2]
-                    ]);
+                // Difference between bottom strut and cutout
+                difference(){
+                    // Translate and rotate bottom strut
+                    translate([Inner_leg_width/2,-Leg_wall_distance/2,Bottom_strut_z])
+                    rotate([0,270,0])
+                    
+                    // Extrude bottom strut
+                    color(Scaffold_color)
+                    linear_extrude(height=Inner_leg_width){
+                    
+                        // Bottom strut polygon
+                        polygon(points=[
+                            [0-Strut_offset,0],
+                            [Strut_thickness,0],
+                            [Strut_thickness,-Diameter/2+Leg_wall_distance/2],
+                            [0,-Diameter/2+Leg_wall_distance/2]
+                        ]);
+                    }
+                    // Cutouts to prevent the bottom strut from going into negative height
+                    rotate([0,180,0])
+                    color(Scaffold_color)
+                    cylinder(d=Diameter,h=Diameter/2+Leg_wall_distance/2);
                 }
             }
             
             if (Top_strut){
                 // Translate and rotate top strut
-                translate([Inner_leg_width/2,-Leg_wall_distance/2,Total_height-Strut_thickness])
+                translate([Inner_leg_width/2,-Leg_wall_distance/2,Top_strut_z])
                 rotate([0,270,0])
                 
                 // Extrude top strut
@@ -220,7 +242,7 @@ difference(){
             if (Middle_strut){
                 // Translate and rotate mid strut
                 color(Scaffold_color)
-                translate([Inner_leg_width/2,-Leg_wall_distance/2,(Total_height-Strut_thickness)/2])
+                translate([Inner_leg_width/2,-Leg_wall_distance/2,Middle_strut_z])
                 rotate([0,270,0])
                 
                 // Extrude mid strut
