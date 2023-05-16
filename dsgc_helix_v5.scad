@@ -13,7 +13,7 @@ Frequency = 1700;
 Spacing = 0.14;
 
 // Number of turns of the helix
-Turns = 5.5;
+Turns = 6;
 
 // Polarization of the helix
 Polarization = "LHCP"; //[RHCP,LHCP]
@@ -25,15 +25,15 @@ Cutout_diameter = 4;
 Parallel_turn = 0.25;
 
 // Face number (OpenSCAD/Customizer parameter)
-$fn = 25;
+$fn = 50;
 
 /* [Leg settings] */
 
 // Width of the inner leg wall (mm)
-Inner_leg_width = 3;
+Inner_leg_width = 4;
 
 // Width of the outer leg wall (mm)
-Outer_leg_width = 11;
+Outer_leg_width = 13;
 
 // Distance between inner and outer leg walls (mm)
 Leg_wall_distance = 12;
@@ -47,7 +47,7 @@ Leg_type = "T-Beam"; //[Trapezoid,T-Beam,H-Beam]
 Base_width = 10;
 
 // Base thickness (mm)
-Base_thickness = 3;
+Base_thickness = 4;
 
 // Cut out a third of the base (space for matching, connector, etc.)
 Enable_cutout = true;
@@ -55,19 +55,19 @@ Enable_cutout = true;
 /* [Strut settings] */
 
 // Thicknes of the top part of each strut (mm)
-Strut_thickness = 1;
+Strut_thickness = 3;
 
 // Angle at which struts are generated (deg)
-Strut_angle = 45;
+Strut_angle = 55;
 
 // Generate a strut at the base of the scaffold
-Bottom_strut = false;
+Bottom_strut = true;
 
 // How much to shift the bottom strut up (mm)
 Bottom_strut_offset = 0;
 
 // Generate a strut in the middle of the scaffold (recommended for tall scaffolds)
-Middle_strut = false;
+Middle_strut = true;
 
 // Generate a strut at the top of the scaffold (recommended for most scaffolds)
 Top_strut = true;
@@ -85,6 +85,9 @@ Mounting_diameter = 10;
 
 // Thickness of the rim around each mounting hole (mm)
 Mounting_thickness = 5;
+
+// Rotational offset of the mounting holes (deg)
+Mounting_rotation = 0;
 
 /* [Text settings] */
 
@@ -358,14 +361,17 @@ difference(){
         cylinder(d=Diameter+Cutout_diameter*1.5+Base_width*2,h=Base_thickness);
         
         // Mounting spar
+        rotate([0,0,Mounting_rotation])
         translate([0,0,Base_thickness/2])
         color(Scaffold_color)
         cube([Mounting_diameter+Mounting_thickness*2,Mounting_separation,Base_thickness],center=true);
         
         // Mounting rims
+        rotate([0,0,Mounting_rotation])
         translate([0,Mounting_separation/2,Base_thickness/2])
         color(Scaffold_color)
         cylinder(d=Mounting_diameter+Mounting_thickness*2,h=Base_thickness,center=true);
+        rotate([0,0,Mounting_rotation])
         translate([0,-Mounting_separation/2,Base_thickness/2])
         color(Scaffold_color)
         cylinder(d=Mounting_diameter+Mounting_thickness*2,h=Base_thickness,center=true);
@@ -388,9 +394,11 @@ difference(){
         cylinder(d=Diameter+Cutout_diameter*1.5,h=Base_thickness+2);
         
         // Mounting holes
+        rotate([0,0,Mounting_rotation])
         translate([0,Mounting_separation/2,Base_thickness/2])
         color(Scaffold_color)
         cylinder(d=Mounting_diameter,h=Base_thickness+2,center=true);
+        rotate([0,0,Mounting_rotation])
         translate([0,-Mounting_separation/2,Base_thickness/2])
         color(Scaffold_color)
         cylinder(d=Mounting_diameter,h=Base_thickness+2,center=true);
