@@ -20,7 +20,7 @@ jobs:
         with:
           scad_file: dsgc_helix_v5.scad
           output_file: wifi.stl
-          args: "-D frequency=2448"
+          options: "-D frequency=2448"
           
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
