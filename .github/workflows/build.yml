@@ -15,15 +15,27 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Build stl file
+      - name: Build default antenna
+        uses: flat35hd99/openscad-actions@main
+        with:
+          scad_file: dsgc_helix_v5.scad
+          output_file: default.stl
+          
+      - name: Upload default
+        uses: actions/upload-artifact@v3
+        with:
+          name: Default antenna
+          path: default.stl
+
+      - name: Build Wifi antenna
         uses: flat35hd99/openscad-actions@main
         with:
           scad_file: dsgc_helix_v5.scad
           output_file: wifi.stl
-          options: "-D frequency=2448"
+          options: "-P wifi"
           
-      - name: Upload Artifacts
+      - name: Upload Wifi
         uses: actions/upload-artifact@v3
         with:
-          name: Wifi Antenna
+          name: Wifi antenna
           path: wifi.stl
