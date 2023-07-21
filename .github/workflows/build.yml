@@ -1,0 +1,29 @@
+name: CI
+
+# Controls when the workflow will run
+on: [push, pull_request]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Build stl file
+        uses: flat35hd99/openscad-actions@v1.3
+        with:
+          scad_file: dsgc_helix_v5.scad
+          output_file: wifi.stl
+          options: "-D frequency=2448"
+          
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Wifi Antenna
+          path: wifi.stl
