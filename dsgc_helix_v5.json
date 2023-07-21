@@ -42,10 +42,10 @@
             "Bottom_strut_offset": "0",
             "C": "2.99792e+8",
             "Cutout_diameter": "4",
-            "Decoration_text": "WIFI",
+            "Decoration_text": "SUBSCRIBE TO DEREKSGC",
             "Enable_cutout": "true",
             "Enable_text": "true",
-            "Frequency": "2448",
+            "Frequency": "2450",
             "Inner_leg_width": "4",
             "Leg_type": "T-Beam",
             "Leg_wall_distance": "12",
@@ -56,7 +56,7 @@
             "Mounting_thickness": "5",
             "Outer_leg_width": "13",
             "Parallel_turn": "0.25",
-            "Polarization": "LHCP",
+            "Polarization": "RHCP",
             "Scaffold_color": "[0.5, 0.5, 0.5]",
             "Spacing": "0.14",
             "Strut_angle": "55",
@@ -66,7 +66,7 @@
             "Text_size_multiplier": "0.8",
             "Top_strut": "true",
             "Top_strut_offset": "0",
-            "Turns": "6"
+            "Turns": "10"
         }
     },
     "fileFormatVersion": "1"
