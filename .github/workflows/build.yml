@@ -32,7 +32,7 @@ jobs:
         with:
           scad_file: dsgc_helix_v5.scad
           output_file: wifi.stl
-          options: "-P wifi"
+          options: "-P wifi -p dsgc_helix_v5.json"
           
       - name: Upload Wifi
         uses: actions/upload-artifact@v3
