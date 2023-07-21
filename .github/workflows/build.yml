@@ -16,11 +16,11 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build stl file
-        uses: flat35hd99/openscad-actions@v1.3
+        uses: flat35hd99/openscad-actions@main
         with:
           scad_file: dsgc_helix_v5.scad
           output_file: wifi.stl
-          options: "-D frequency=2448"
+          args: "-D frequency=2448"
           
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
